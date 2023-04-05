@@ -10,6 +10,7 @@ import { telegramUsers } from './services/telegramUsers'
 const auth = async (page: Page) => {
   await goToLoginPage(page)
   await userLogin(page)
+  console.log('auth')
 }
 
 (async () => {
@@ -35,8 +36,7 @@ const auth = async (page: Page) => {
           for (const userId of telegramUsers) {
             await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível')
             const pageContent = await page.content()
-            await fs.writeFile('passportPage.pdf', pageContent)
-            await bot.telegram.sendDocument(userId, '../passportPage.pdf')
+            await fs.writeFile('passportPage.html', pageContent)
           }
         }
 
