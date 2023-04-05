@@ -7,7 +7,7 @@ export const passportAppointmentIsAvailable = async (page: Page) => {
   await page.waitForLoadState('networkidle')
   await page.locator('#dataTableServices > tbody > tr:nth-child(1) > td:nth-child(4) > a').click()
   await page.waitForLoadState('networkidle')
-  await page.waitForTimeout(3000)
+  await page.waitForTimeout(3500)
   const text = await page.locator('.jconfirm-content > div').innerText().catch((error) => '')
 
   if (text === 'Al momento non ci sono date disponibili per il servizio richiesto') {
