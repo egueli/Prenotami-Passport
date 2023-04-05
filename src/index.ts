@@ -21,7 +21,7 @@ const auth = async (page: Page) => {
   }, 1000 * 60 * 60)
 
   try {
-    const browser = await webkit.launch({ headless: false /* open browser */ })
+    const browser = await webkit.launch({ headless: true /* open browser */ })
     const page = await browser.newPage()
 
     await auth(page)
