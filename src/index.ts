@@ -31,10 +31,12 @@ const auth = async (page: Page) => {
     do {
       try {
         const isAvailable = await passportAppointmentIsAvailable(page)
+        console.log('trying access')
 
         if (isAvailable) {
           for (const userId of telegramUsers) {
             await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível')
+            console.log('System open')
             const pageContent = await page.content()
             await fs.writeFile('passportPage.html', pageContent)
           }
