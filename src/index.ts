@@ -13,7 +13,8 @@ const auth = async (page: Page) => {
   console.log('auth')
 }
 
-(async () => {
+const run = async () => {
+  const browser = await webkit.launch({ headless: true /* open browser */ })
 
   setInterval(async () => {
     for (const userId of telegramUsers) {
@@ -22,7 +23,6 @@ const auth = async (page: Page) => {
   }, 1000 * 60 * 60)
 
   try {
-    const browser = await webkit.launch({ headless: true /* open browser */ })
     const page = await browser.newPage()
 
     await auth(page)
@@ -56,6 +56,10 @@ const auth = async (page: Page) => {
   } catch (error) {
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, (error as Error).message)
+      await browser.close()
+      run()
     }
   }
-})()
+}
+
+run()
