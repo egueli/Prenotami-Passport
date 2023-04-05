@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:true});Object.defineProperty(exports,"telegramUsers",{enumerable:true,get:()=>telegramUsers});const telegramUsers=[168037041];
