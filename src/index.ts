@@ -51,8 +51,8 @@ const run = async () => {
         await auth(page)
       }
     } while (loop)
-
     await browser.close()
+    run()
   } catch (error) {
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, (error as Error).message)
