@@ -54,6 +54,7 @@ const run = async () => {
     await browser.close()
     run()
   } catch (error) {
+    console.error('catch an error 👀: run message error: ' + (error as Error).message)
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, (error as Error).message)
       await browser.close()
