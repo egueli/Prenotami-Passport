@@ -17,7 +17,7 @@ export const passportAppointmentIsAvailable = async (page: Page) => {
     return !(text === 'Al momento non ci sono date disponibili per il servizio richiesto')
   } catch (error) {
     console.error('catch an error 👀: passportAppointmentIsAvailable')
-    return false 
+    return 'error'
   }
 }
 

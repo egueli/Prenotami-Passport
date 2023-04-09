@@ -28,12 +28,15 @@ const run = async () => {
     await auth(page)
 
     let loop = true
+    let countError = 0
     do {
       try {
         const isAvailable = await passportAppointmentIsAvailable(page)
         console.log('trying access')
 
-        if (isAvailable) {
+        if (typeof isAvailable === 'string') {
+          countError++
+        } else if (isAvailable) {
           for (const userId of telegramUsers) {
             await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível')
             console.log('System open')
@@ -42,7 +45,11 @@ const run = async () => {
           }
         }
 
-        loop = !isAvailable
+        // loop = !isAvailable
+        if (countError >= 5) {
+          countError = 0
+          throw new Error('user logout: LOGIN AGAIN')
+        }
       } catch (error) {
         for (const userId of telegramUsers) {
           await bot.telegram.sendMessage(userId, (error as Error).message)
