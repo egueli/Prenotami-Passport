@@ -13,10 +13,10 @@ const auth = async (page: Page) => {
   console.log('auth')
 }
 
-const run = async () => {
+const main = async () => {
   const browser = await webkit.launch({ headless: true /* open browser */ })
 
-  setInterval(async () => {
+  let timeInterval = setInterval(async () => {
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, 'App running').catch()
     }
@@ -55,19 +55,20 @@ const run = async () => {
           await bot.telegram.sendMessage(userId, (error as Error).message)
         }
 
-        await auth(page)
+        if (countError >= 5) {
+          throw new Error('reload main function ')
+        }
       }
     } while (loop)
-    await browser.close()
-    run()
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, (error as Error).message)
       await browser.close()
-      run()
+      clearInterval(timeInterval)
+      main()
     }
   }
 }
 
-run()
+main()
