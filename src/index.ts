@@ -65,9 +65,9 @@ const main = async () => {
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, (error as Error).message)
       await browser.close()
-      clearInterval(timeInterval)
-      main()
     }
+    clearInterval(timeInterval)
+    main()
   }
 }
 
