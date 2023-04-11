@@ -38,7 +38,7 @@ const main = async () => {
           countError++
         } else if (isAvailable) {
           for (const userId of telegramUsers) {
-            await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível')
+            await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível').catch()
             console.log('System open')
             const pageContent = await page.content()
             await fs.writeFile('passportPage.html', pageContent)
@@ -52,7 +52,7 @@ const main = async () => {
         }
       } catch (error) {
         for (const userId of telegramUsers) {
-          await bot.telegram.sendMessage(userId, (error as Error).message)
+          await bot.telegram.sendMessage(userId, (error as Error).message).catch()
         }
 
         if (countError >= 5) {
@@ -63,9 +63,9 @@ const main = async () => {
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
     for (const userId of telegramUsers) {
-      await bot.telegram.sendMessage(userId, (error as Error).message)
+      await bot.telegram.sendMessage(userId, (error as Error).message).catch()
     }
-    await browser.close()
+    await browser.close().catch()
     clearInterval(timeInterval)
     main()
   }
