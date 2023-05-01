@@ -1,4 +1,13 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const email = process.env.PRENOTAMI_EMAIL
+if (email === undefined) throw Error("Missing Prenotami account email")
+
+const password = process.env.PRENOTAMI_PASSWORD
+if (password === undefined) throw Error("Missing Prenotami account password")
+
 export default {
-  email: 'fasit92447@kaudat.com',
-  password: '@TesteBot123',
+  email: email,
+  password: password,
 }

@@ -1,6 +1,11 @@
 import { Telegraf } from 'telegraf'
 
-export const bot = new Telegraf('6210435501:AAHQXsGS2tFE5viWV3IvM8ram_Qz8u-sar8')
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+const token = process.env.TELEGRAM_BOT_TOKEN
+if (token === undefined) throw Error("Missing Telegram bot token")
+export const bot = new Telegraf(token)
 
   // const bot = new Telegraf('5676055374:AAHWFXHHHNTQwXt1k8CVqGxklWUuL-4f9Is')
   // bot.start(ctx => ctx.reply('Welcome'))
