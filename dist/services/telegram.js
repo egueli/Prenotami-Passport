@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:true});Object.defineProperty(exports,"bot",{enumerable:true,get:()=>bot});const _telegraf=require("telegraf");const bot=new _telegraf.Telegraf("6210435501:AAHQXsGS2tFE5viWV3IvM8ram_Qz8u-sar8");

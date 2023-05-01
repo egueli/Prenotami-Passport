@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:true});Object.defineProperty(exports,"goToLoginPage",{enumerable:true,get:()=>goToLoginPage});const _locators=require("../constants/locators");const goToLoginPage=async page=>{await page.goto(_locators.PRONOTAMI_URL);await page.waitForLoadState("networkidle")};
