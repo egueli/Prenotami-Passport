@@ -8,13 +8,14 @@ export const passportAppointmentIsAvailable = async (page: Page) => {
     await page.waitForLoadState('load')
     await page.locator('#dataTableServices > tbody > tr:nth-child(1) > td:nth-child(4) > a').click()
     await page.waitForLoadState('load')
-    const text = await page.locator('.jconfirm-content > div').innerText().catch((error) => '')
+    const text = await page.locator('.jconfirm-content > div').innerText().catch((_) => '')
   
-    if (text === 'Al momento non ci sono date disponibili per il servizio richiesto') {
+    const noAvailable = (text === 'Al momento non ci sono date disponibili per il servizio richiesto')
+    if (noAvailable) {
       await page.locator('.jconfirm-buttons > button').click()
     }
   
-    return !(text === 'Al momento non ci sono date disponibili per il servizio richiesto')
+    return !noAvailable
   } catch (error) {
     console.error('catch an error 👀: passportAppointmentIsAvailable')
     return 'error'
