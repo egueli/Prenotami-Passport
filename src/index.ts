@@ -1,3 +1,4 @@
+require('log-timestamp')
 import { webkit, Page } from 'playwright'
 import { goToLoginPage } from './functions/goToLoginPage'
 import { userLogin } from './functions/userLogin'
