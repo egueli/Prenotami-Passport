@@ -36,8 +36,9 @@ const main = async () => {
     let countError = 0
     do {
       try {
-        const isAvailable = await passportAppointmentIsAvailable(page)
         console.log('trying access')
+        const isAvailable = await passportAppointmentIsAvailable(page)
+        console.log(`isAvailable: ${isAvailable}`)
 
         if (typeof isAvailable === 'string') {
           countError++
