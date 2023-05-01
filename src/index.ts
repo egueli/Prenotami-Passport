@@ -27,6 +27,10 @@ const main = async () => {
 
     await auth(page)
 
+    for (const userId of telegramUsers) {
+      await bot.telegram.sendMessage(userId, 'The app just logged in').catch()
+    }
+
     let loop = true
     let countError = 0
     do {
