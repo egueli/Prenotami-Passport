@@ -3,6 +3,7 @@ import { webkit, Page } from 'playwright'
 import { goToLoginPage } from './functions/goToLoginPage'
 import { userLogin } from './functions/userLogin'
 import { passportAppointmentIsAvailable } from './functions/passport'
+import { setTimeout } from 'timers/promises'
 import fs from 'fs/promises'
 
 import { bot } from './services/telegram'
@@ -65,6 +66,8 @@ const main = async () => {
           throw new Error('reload main function ')
         }
       }
+
+      await setTimeout(5000)
     } while (loop)
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
