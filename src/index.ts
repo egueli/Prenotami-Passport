@@ -15,13 +15,21 @@ const auth = async (page: Page) => {
   console.log('auth')
 }
 
+async function sendTelegramMessage(message: string) {
+  try {
+    for (const userId of telegramUsers) {
+      await bot.telegram.sendMessage(userId, message)
+    }
+  } catch (e) {
+    console.log(`Unable to send Telegram message: ${(e as Error).message}`)
+  }
+}
+
 const main = async () => {
   const browser = await webkit.launch({ headless: true /* open browser */ })
 
   let timeInterval = setInterval(async () => {
-    for (const userId of telegramUsers) {
-      await bot.telegram.sendMessage(userId, 'App running').catch()
-    }
+    sendTelegramMessage('App running')
   }, 1000 * 60 * 60)
 
   try {
@@ -29,9 +37,7 @@ const main = async () => {
 
     await auth(page)
 
-    for (const userId of telegramUsers) {
-      await bot.telegram.sendMessage(userId, 'The app just logged in').catch()
-    }
+    sendTelegramMessage('The app just logged in')
 
     let loop = true
     let countError = 0
@@ -44,13 +50,11 @@ const main = async () => {
         if (typeof isAvailable === 'string') {
           countError++
         } else if (isAvailable) {
-          for (const userId of telegramUsers) {
-            await bot.telegram.sendMessage(userId, 'Prenotami Agendamento do passporte disponível').catch()
-            console.log('System open')
-            const pageContent = await page.content()
-            await fs.writeFile('passportPage.html', pageContent)
-          }
-        }
+          sendTelegramMessage('Prenotami Agendamento do passporte disponível')
+          console.log('System open')
+          const pageContent = await page.content()
+          await fs.writeFile('passportPage.html', pageContent)
+      }
 
         // loop = !isAvailable
         if (countError >= 5) {
@@ -58,12 +62,10 @@ const main = async () => {
           throw new Error('user logout: LOGIN AGAIN')
         }
       } catch (error) {
-        for (const userId of telegramUsers) {
-          await bot.telegram.sendMessage(userId, (error as Error).message).catch()
-        }
+        sendTelegramMessage(`App error ${(error as Error).message}`)
 
         if (countError >= 5) {
-          throw new Error('reload main function ')
+          throw new Error('reload main function')
         }
       }
 
@@ -71,9 +73,7 @@ const main = async () => {
     } while (loop)
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
-    for (const userId of telegramUsers) {
-      await bot.telegram.sendMessage(userId, (error as Error).message).catch()
-    }
+    sendTelegramMessage((error as Error).message)
     await browser.close().catch()
     clearInterval(timeInterval)
     main()
