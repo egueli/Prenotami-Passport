@@ -20,6 +20,7 @@ async function sendTelegramMessage(message: string) {
     for (const userId of telegramUsers) {
       await bot.telegram.sendMessage(userId, message)
     }
+    console.log(`Telegram message(s) sent: ${message}`)
   } catch (e) {
     console.log(`Unable to send Telegram message: ${(e as Error).message}`)
   }
@@ -43,7 +44,7 @@ const main = async () => {
     let countError = 0
     do {
       try {
-        console.log('trying access')
+        console.log(`trying access`)
         const isAvailable = await passportAppointmentIsAvailable(page)
         console.log(`isAvailable: ${isAvailable}`)
 
@@ -69,7 +70,7 @@ const main = async () => {
         }
       }
 
-      await setTimeout(5000)
+      await setTimeout(1000 * 60)
     } while (loop)
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
