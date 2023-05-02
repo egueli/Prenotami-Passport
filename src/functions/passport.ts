@@ -17,7 +17,7 @@ export const passportAppointmentIsAvailable = async (page: Page) => {
   
     return !noAvailable
   } catch (error) {
-    console.error('catch an error 👀: passportAppointmentIsAvailable')
+    console.error(`catch an error 👀: passportAppointmentIsAvailable: ${(error as Error).message}`)
     return 'error'
   }
 }
