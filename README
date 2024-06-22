@@ -1,5 +1,9 @@
 Instructions to use:
 
+* copy `.env.template` to `.env`, and edit with your data
+
+* run the following:
+
 ```
 nvm install 16
 nvm use 16
