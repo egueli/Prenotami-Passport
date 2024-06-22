@@ -10,7 +10,7 @@ export const passportAppointmentIsAvailable = async (page: Page) => {
     await page.waitForLoadState('load')
     const text = await page.locator('.jconfirm-content > div').innerText().catch((_) => '')
   
-    const noAvailable = (text === 'Al momento non ci sono date disponibili per il servizio richiesto')
+    const noAvailable = (text.startsWith("Stante l'elevata richiesta i posti disponibili per il servizio scelto sono esauriti"))
     if (noAvailable) {
       await page.locator('.jconfirm-buttons > button').click()
     }
