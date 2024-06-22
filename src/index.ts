@@ -27,13 +27,15 @@ async function sendTelegramMessage(message: string) {
 }
 
 const main = async () => {
-  const browser = await webkit.launch({ headless: true /* open browser */ })
+  const browser = await webkit.launch({ headless: false /* open browser */ })
+  const context = await browser.newContext()
 
   let timeInterval = setInterval(async () => {
     sendTelegramMessage('App running')
   }, 1000 * 60 * 60)
 
   try {
+    await context.tracing.start({ screenshots: true, snapshots: true });
     const page = await browser.newPage()
 
     await auth(page)
@@ -44,7 +46,7 @@ const main = async () => {
     let countError = 0
     do {
       try {
-        console.log(`trying access`)
+        console.log(`trying access (countError=${countError})`)
         const isAvailable = await passportAppointmentIsAvailable(page)
         console.log(`isAvailable: ${isAvailable}`)
 
@@ -74,6 +76,7 @@ const main = async () => {
     } while (loop)
   } catch (error) {
     console.error('catch an error 👀: run message error: ' + (error as Error).message)
+    await context.tracing.stop({ path: `trace-${new Date().toISOString()}.zip` });
     sendTelegramMessage((error as Error).message)
     await browser.close().catch()
     clearInterval(timeInterval)
